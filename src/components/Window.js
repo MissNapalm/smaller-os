@@ -1,12 +1,11 @@
-
 import React, { useState, useRef, useEffect } from "react";
 
 const Window = ({ title, content, onClose }) => {
   const [position, setPosition] = useState({
-    x: Math.max(50, (window.innerWidth - 520) / 2),
-    y: Math.max(50, Math.min((window.innerHeight - 480) / 2, window.innerHeight - 485))
+    x: Math.max(50, (window.innerWidth - 680) / 2),
+    y: Math.max(50, Math.min((window.innerHeight - 582) / 2, window.innerHeight - 587))
   });
-  const [size, setSize] = useState({ width: 520, height: 480 });
+  const [size, setSize] = useState({ width: 680, height: 582 }); // 520 * 1.12 = 582.4
   const [dragging, setDragging] = useState(false);
   const [resizing, setResizing] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
@@ -184,18 +183,41 @@ const Window = ({ title, content, onClose }) => {
           position: "relative",
           lineHeight: "1.6",
           borderBottomLeftRadius: "20px",
-          borderBottomRightRadius: "20px"
+          borderBottomRightRadius: "20px",
+          minHeight: 0, // Ensures flexbox allows shrinking
         }}
       >
         <div style={{ 
-          padding: "24px", 
-          height: "100%", 
+          width: "100%",
+          height: "100%",
+          minHeight: 0, // Ensures content fits in flexbox
           boxSizing: "border-box",
-          paddingBottom: "40px" // Extra space for resize area
+          padding: "24px",
+          paddingBottom: "40px"
         }}>
-          {content}
+          {typeof content === "string" ? (
+            // Remove HTTPS mention in security section if present
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content.replace(
+                  /(<li[^>]*>[^<]*)(https[^<]*)(<\/li>)/i,
+                  (match, p1, p2, p3) => {
+                    // Remove 'https' mention from the second list item only
+                    if (
+                      /security/i.test(content) &&
+                      content.split("<li").findIndex(li => li.includes(p2)) === 2
+                    ) {
+                      return p1 + p3;
+                    }
+                    return match;
+                  }
+                ),
+              }}
+            />
+          ) : (
+            content
+          )}
         </div>
-        
         {/* Integrated resize handle */}
         <div
           className="resize-handle"

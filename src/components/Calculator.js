@@ -1,5 +1,41 @@
 import React, { useState, useRef, useEffect } from "react";
 
+const buttonStyle = {
+  background: "linear-gradient(180deg, #23242a 0%, #18181c 100%)",
+  border: "none",
+  borderRadius: "12px",
+  color: "#fff",
+  fontSize: "1.4rem",
+  fontWeight: 500,
+  margin: "6px",
+  width: "56px",
+  height: "56px",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+  transition: "background 0.2s, box-shadow 0.2s",
+  cursor: "pointer",
+};
+
+const operatorStyle = {
+  ...buttonStyle,
+  background: "linear-gradient(180deg, #7f5af0 0%, #6246ea 100%)",
+  color: "#fff",
+  fontWeight: 700,
+};
+
+const equalsStyle = {
+  ...buttonStyle,
+  background: "linear-gradient(180deg, #2cb67d 0%, #1a936f 100%)",
+  color: "#fff",
+  fontWeight: 700,
+};
+
+const clearStyle = {
+  ...buttonStyle,
+  background: "linear-gradient(180deg, #ff6f91 0%, #ff477e 100%)",
+  color: "#fff",
+  fontWeight: 700,
+};
+
 const Calculator = ({ onClose }) => {
   const [position, setPosition] = useState({
     x: Math.max(50, (window.innerWidth - 300) / 2),

@@ -216,21 +216,28 @@ const App = () => {
           zIndex: 40,
         }}
       >
-        <h1 className="text-white font-bold text-center" style={{
-          fontSize: "4.5rem", // a bit smaller than 5.2rem
-          fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-          fontWeight: "700",
-          letterSpacing: "-0.02em",
-          textShadow: "0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)",
-        }}>
+        <h1
+          className="text-white font-bold text-center"
+          style={{
+            fontSize: "5.2rem", // 30% bigger than 4rem
+            fontFamily: "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            fontWeight: "700",
+            letterSpacing: "-0.02em",
+            textShadow: "0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)",
+          }}
+        >
           <span>Sarah</span>
-          <span style={{ 
-            fontSize: "1.3em", 
-            display: "inline-block", 
-            marginLeft: "0.15em",
-            fontWeight: "800",
-            color: "white"
-          }}>OS</span>
+          <span
+            style={{
+              fontSize: "1.3em",
+              display: "inline-block",
+              marginLeft: "0.15em",
+              fontWeight: "800",
+              color: "white",
+            }}
+          >
+            OS
+          </span>
         </h1>
         <p className="text-white text-center" style={{
           fontSize: "1.1rem",

@@ -52,3 +52,4 @@
   }
   
   /* Removed .dock-icon:hover to let React handle all hover effects */
+const [size, setSize] = useState({ width: 680, height: 400 });
