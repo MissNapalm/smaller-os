@@ -110,8 +110,7 @@ const Window = ({ title, content, onClose }) => {
           height: "52px",
           letterSpacing: "-0.01em",
           borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px",
-          flexShrink: 0
+          borderTopRightRadius: "20px"
         }}
       >
         <span>{title}</span>
@@ -196,7 +195,6 @@ const Window = ({ title, content, onClose }) => {
             width: "100%",
             boxSizing: "border-box",
             padding: "24px",
-            paddingBottom: "36px", // <-- Add padding for the resize handle
             display: "flex",
             flexDirection: "column",
           }}
@@ -208,20 +206,17 @@ const Window = ({ title, content, onClose }) => {
           )}
         </div>
 
-        {/* Resize handle INSIDE scroll area, overlays but doesn't hide content */}
+        {/* Resize handle OUTSIDE scroll area */}
         <div
           className="resize-handle"
           style={{
             width: "28px",
             height: "28px",
             cursor: "se-resize",
-            position: "absolute",
-            bottom: "0",
-            right: "0",
+            alignSelf: "flex-end",
             zIndex: 1001,
             borderBottomRightRadius: "19px",
-            userSelect: "none",
-            background: "transparent"
+            userSelect: "none"
           }}
           onMouseDown={handleResizeStart}
         />
