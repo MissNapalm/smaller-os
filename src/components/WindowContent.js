@@ -835,7 +835,7 @@ export const NonprofitContent = () => (
     background: '#1e1e1e',
     fontFamily: '"Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
     lineHeight: '1.6',
-    maxHeight: '400px',
+    maxHeight: '600px',
     overflowY: 'auto',
   }}>
     <div style={{

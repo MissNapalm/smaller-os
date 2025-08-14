@@ -110,7 +110,8 @@ const Window = ({ title, content, onClose }) => {
           height: "52px",
           letterSpacing: "-0.01em",
           borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px"
+          borderTopRightRadius: "20px",
+          flexShrink: 0
         }}
       >
         <span>{title}</span>
@@ -170,9 +171,9 @@ const Window = ({ title, content, onClose }) => {
         className="window-content"
         style={{
           flex: 1,
-          padding: "0",
-          overflowY: "auto",
-          overflowX: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: 0,
           color: "rgba(255, 255, 255, 0.92)",
           fontSize: "14px",
           fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
@@ -184,57 +185,46 @@ const Window = ({ title, content, onClose }) => {
           lineHeight: "1.6",
           borderBottomLeftRadius: "20px",
           borderBottomRightRadius: "20px",
-          minHeight: 0, // Ensures flexbox allows shrinking
         }}
       >
-        <div style={{ 
-          width: "100%",
-          height: "100%",
-          minHeight: 0, // Ensures content fits in flexbox
-          boxSizing: "border-box",
-          padding: "24px",
-          paddingBottom: "40px"
-        }}>
+        {/* Scrollable content area */}
+        <div
+          style={{
+            flex: 1,
+            minHeight: 0,
+            overflow: "auto",
+            width: "100%",
+            boxSizing: "border-box",
+            padding: "24px",
+            paddingBottom: "36px", // <-- Add padding for the resize handle
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           {typeof content === "string" ? (
-            // Remove HTTPS mention in security section if present
-            <div
-              dangerouslySetInnerHTML={{
-                __html: content.replace(
-                  /(<li[^>]*>[^<]*)(https[^<]*)(<\/li>)/i,
-                  (match, p1, p2, p3) => {
-                    // Remove 'https' mention from the second list item only
-                    if (
-                      /security/i.test(content) &&
-                      content.split("<li").findIndex(li => li.includes(p2)) === 2
-                    ) {
-                      return p1 + p3;
-                    }
-                    return match;
-                  }
-                ),
-              }}
-            />
+            <div style={{ flex: 1 }} dangerouslySetInnerHTML={{ __html: content }} />
           ) : (
-            content
+            <div style={{ flex: 1 }}>{content}</div>
           )}
         </div>
-        {/* Integrated resize handle */}
+
+        {/* Resize handle INSIDE scroll area, overlays but doesn't hide content */}
         <div
           className="resize-handle"
           style={{
-            position: "absolute",
-            bottom: "1px",
-            right: "1px",
             width: "28px",
             height: "28px",
             cursor: "se-resize",
+            position: "absolute",
+            bottom: "0",
+            right: "0",
             zIndex: 1001,
             borderBottomRightRadius: "19px",
-            userSelect: "none"
+            userSelect: "none",
+            background: "transparent"
           }}
           onMouseDown={handleResizeStart}
-        >
-        </div>
+        />
       </div>
     </div>
   );
