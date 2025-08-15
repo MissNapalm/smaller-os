@@ -116,6 +116,9 @@ const Dock = ({ apps, onAppClick }) => {
               margin: "0 15px",
               cursor: "pointer",
               height: "100%",
+              position: "relative",
+              transition: "transform 0.3s ease",
+              transform: hoveredIndex === index ? "scale(1.1)" : "scale(1)",
             }}
           >
             <div
@@ -123,18 +126,53 @@ const Dock = ({ apps, onAppClick }) => {
               style={{
                 margin: "0",
                 marginTop: "-6px",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                transform: hoveredIndex === index ? "scale(1.2)" : "scale(1)",
-                textShadow:
-                  hoveredIndex === index
-                    ? "0 0 20px rgba(255, 255, 255, 0.8)"
-                    : "none",
+                transition: "all 0.3s ease",
+                transform: hoveredIndex === index ? "scale(1.15)" : "scale(1)",
+                position: "relative",
+                zIndex: 2,
               }}
             >
+              {/* Seamless glow effect using pseudo-element approach */}
+              {hoveredIndex === index && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "80px",
+                    height: "80px",
+                    background: "radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.05) 60%, transparent 80%)",
+                    borderRadius: "50%",
+                    filter: "blur(6px)",
+                    pointerEvents: "none",
+                    zIndex: -1,
+                  }}
+                />
+              )}
               {typeof app.icon === "string" ? (
-                <span style={{ fontSize: "35px" }}>{app.icon}</span>
+                <span style={{ 
+                  fontSize: "35px",
+                  filter: hoveredIndex === index
+                    ? `drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)) 
+                       drop-shadow(0 0 16px rgba(255, 255, 255, 0.3))
+                       brightness(1.15)`
+                    : "none",
+                  position: "relative",
+                  zIndex: 1,
+                }}>{app.icon}</span>
               ) : (
-                app.icon
+                <div style={{
+                  filter: hoveredIndex === index 
+                    ? `drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
+                       drop-shadow(0 0 16px rgba(255, 255, 255, 0.3))
+                       brightness(1.15)`
+                    : "none",
+                  position: "relative",
+                  zIndex: 1,
+                }}>
+                  {app.icon}
+                </div>
               )}
             </div>
             <span
@@ -143,12 +181,15 @@ const Dock = ({ apps, onAppClick }) => {
                 fontSize: "17px",
                 marginTop: "-6px",
                 opacity: hoveredIndex === index ? 1 : 0.7,
-                transition: "opacity 0.3s ease",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
+                transition: "all 0.3s ease",
+                textShadow: hoveredIndex === index 
+                  ? "0 0 8px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0, 0, 0, 0.5)"
+                  : "0 2px 4px rgba(0, 0, 0, 0.5)",
                 fontFamily:
                   "'Inter', 'Montserrat', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                fontWeight: "300",
+                fontWeight: hoveredIndex === index ? "400" : "300",
                 letterSpacing: "0.4px",
+                zIndex: 2,
               }}
             >
               {app.name}
